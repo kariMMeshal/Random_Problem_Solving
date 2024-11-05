@@ -1,0 +1,65 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <limits.h>
+#include <map>
+#include <set>
+typedef long long ll;
+
+using namespace std;
+
+int main()
+{
+  ios::sync_with_stdio(false);
+  cin.tie(nullptr);
+
+  ll t;
+  cin >> t;
+  while (t--)
+  {
+    map<int, int> freq;
+    set<ll> unique_elements;
+    ll n, k;
+    cin >> n >> k;
+    for (ll i = 0; i < n; i++)
+    {
+      ll x;
+      cin >> x;
+      unique_elements.insert(x);
+      freq[x]++;
+    }
+    vector<ll> arr(unique_elements.begin(), unique_elements.end());
+    n = arr.size();
+    // now i have the sorted ditinct arr and its freq arr
+
+    cout << "\n";
+    ll start = 0;
+    ll end = 0;
+    ll MX = 0;
+    ll sum = 0;
+    while (end < n)
+    {
+      if (end > 0 && arr[end] != arr[end - 1] + 1)
+      {
+        start = end;
+        sum = 0;
+      }
+
+      if (end - start < k)
+      {
+        sum += freq[arr[end]];
+        end++;
+      }
+      else
+      {
+        sum -= freq[arr[start]];
+        start++;
+      }
+
+      MX = max(MX, sum);
+    }
+    cout << MX << "\n";
+  }
+
+  return 0;
+}
