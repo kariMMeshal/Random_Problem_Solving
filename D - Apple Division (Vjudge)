@@ -1,0 +1,50 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <limits.h>
+#include <map>
+#include <set>
+typedef long long ll;
+
+using namespace std;
+
+int main()
+{
+  ios::sync_with_stdio(false);
+  cin.tie(nullptr);
+
+  int n;
+  cin >> n;
+  ll arr[20];
+  ll sum = 0;
+  ll MN = LLONG_MAX;
+  for (int i = 0; i < n; i++)
+  {
+    cin >> arr[i];
+    sum += arr[i];
+  }
+  if (n == 1)
+  {
+    cout << arr[0];
+    return 0;
+  }
+  for (int mask = 0; mask < (1 << n); mask++)
+  {
+    ll g1 = 0;
+
+    for (int j = 0; j < n; j++)
+    {
+      if (mask & (1 << j))
+      {
+        g1 += arr[j];
+      }
+    }
+    ll g2 = sum - g1;
+    // cout << " g1: " << g1 << " g2: " << g2 << " g1-g2= " << abs(g1 - g2) << "\n";
+    ll dif = abs(g1 - g2);
+    MN = min(MN, dif);
+  }
+  cout << MN;
+
+  return 0;
+}
